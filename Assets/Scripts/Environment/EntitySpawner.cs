@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Environment{
+namespace Entities{
     public class EntitySpawner : MonoBehaviour
     {
         [SerializeField]
@@ -11,14 +11,14 @@ namespace Environment{
         GameObject DeerPrefab;
         public int population = 50;
         public bool SpawnOnStart = false;
-        EnvironmentMaps environmentMap = new EnvironmentMaps();
+        EntityMap entityMap = new EntityMap();
 
         void Start(){
-            environmentMap.GetInfo();
-            TreeMap treeMap = new TreeMap(environmentMap.mapSize);
+            entityMap.GetInfo();
+            TreeMap treeMap = new TreeMap(entityMap.mapSize);
 
             if(SpawnOnStart)
-                initialSpawn(environmentMap.mapSize, environmentMap.tileCenters, environmentMap.walkable, treeMap);
+                initialSpawn(entityMap.mapSize, entityMap.tileCenters, entityMap.walkable, treeMap);
         }
 
 
@@ -29,8 +29,8 @@ namespace Environment{
             for(int i=0; i<population; i++){
                 x = Random.Range(0, mapSize);
                 y = Random.Range(0, mapSize);
-                if(environmentMap.walkable[x, y] && !treeMap.isTree(x, y)){
-                    GameObject.Instantiate(TreePrefab, environmentMap.tileCenters[x, y] + new Vector3(0, 0.01f, 0), Quaternion.Euler(-89.98f, 0, 0));
+                if(entityMap.walkable[x, y] && !treeMap.isTree(x, y)){
+                    GameObject.Instantiate(TreePrefab, entityMap.tileCenters[x, y] + new Vector3(0, 0.01f, 0), Quaternion.Euler(-89.98f, 0, 0));
                     treeMap.addTree(x, y);
                 }
                 else{

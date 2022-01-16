@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Environment{
+namespace Entities{
     public class AnimalBehaviour : MonoBehaviour
     {
-        public float movementSpeed = 0.5f;
+        public float movementSpeed = 3f;
         public float rotationSpeed = 0.2f;
-        EnvironmentMaps environmentMap = new EnvironmentMaps();
-        Vector3 newDirection;
+        EntityMap entityMap = new EntityMap();
         bool needsUpdate;
-        bool objectRotated;  
+        bool objectRotated;
+        Vector3 newDirection;
         Vector3[] Directions = new Vector3[]{new Vector3(1f, 0, 0),new  Vector3(-1f, 0, 0),new  Vector3(0, 0, 1f),new  Vector3(0, 0, -1f),new  Vector3(1f, 0, 1f),new  Vector3(1f, 0, -1f),new  Vector3(-1f, 0, 1f),new  Vector3(1f, 0, -1f)};
+        public int[] stopInterval = {1, 3};
+        bool onTheMove = false;
+        bool coroutineIsRunnig = false;
+
 
         int weightedRandomDirection(){
             int randomDirection = Random.Range(0, 8);
@@ -68,18 +72,24 @@ namespace Environment{
         //         return false;
         // }
 
-        void Start()
-        {
-            needsUpdate = false;
-            objectRotated = true;
-            environmentMap.GetInfo();
-            environmentMap.CreateWalkableMap();
+        void casualMovement(){
+            StartCoroutine(StopRandomly());
+            if(onTheMove)
+                Move();
         }
 
+        IEnumerator StopRandomly(){
+            if(coroutineIsRunnig)
+                yield break;
+            coroutineIsRunnig = true;
+
+            yield return new WaitForSeconds((float)Random.Range(stopInterval[0], stopInterval[1]));
+            onTheMove = !onTheMove;
+            coroutineIsRunnig = false;
+        }
         
-        void Update()
-        {   
-            getNewDirection(environmentMap.WalkableMap);
+        void Move(){
+            getNewDirection(entityMap.WalkableMap);
             if(!objectRotated && !needsUpdate){
                 // RotateObject(0.1f);
                 transform.rotation = Quaternion.LookRotation(newDirection);
@@ -87,6 +97,21 @@ namespace Environment{
             }
             else if(objectRotated && !needsUpdate)
                 transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, movementSpeed * Time.deltaTime);
+        }
+
+        void Start()
+        {
+            needsUpdate = false;
+            objectRotated = true;
+            entityMap.GetInfo();
+            entityMap.CreateWalkableMap();
+        }
+
+        
+        void Update()
+        {   
+            casualMovement();
+
         }
     }
 }

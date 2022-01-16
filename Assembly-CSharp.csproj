@@ -44,9 +44,11 @@
      <Compile Include="Assets\Scripts\Camera\FreeCamera.cs" />
      <Compile Include="Assets\Scripts\Environment\EnvironmentMaps.cs" />
      <Compile Include="Assets\Scripts\Terrain\NoiseSettings.cs" />
+     <Compile Include="Assets\Scripts\Environment\AnimalBehaviour.cs" />
      <Compile Include="Assets\Scripts\Terrain\MapDisplay.cs" />
      <Compile Include="Assets\Scripts\Tests\TestSpawner.cs" />
-     <Compile Include="Assets\Scripts\Environment\AnimalBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Environment\DeerBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Environment\WolfBehaviour.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

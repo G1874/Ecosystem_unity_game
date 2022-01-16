@@ -21,18 +21,22 @@ namespace Entities{
                         WalkableMap.Add(key, false);
                 }
                 // map border
-                Vector3 key1 = new Vector3(tileCenters[0, y].x - 1, 0, tileCenters[0, y].z - 1);
+                Vector3 key1 = new Vector3(tileCenters[0, y].x - 1, 0, tileCenters[0, y].z);
                 WalkableMap.Add(key1, false);
-                key1 = new Vector3(tileCenters[mapSize-1, y].x + 1, 0, tileCenters[mapSize-1, y].z + 1);
+                key1 = new Vector3(tileCenters[mapSize-1, y].x + 1, 0, tileCenters[mapSize-1, y].z);
                 WalkableMap.Add(key1, false);
             }
             //map border
-            for(int x=1; x<mapSize-1; x++){
-                    Vector3 key2 = new Vector3(tileCenters[x, 0].x - 1, 0, tileCenters[x, 0].z - 1);
+            for(int x=0; x<mapSize; x++){
+                    Vector3 key2 = new Vector3(tileCenters[x, 0].x, 0, tileCenters[x, 0].z - 1);
                     WalkableMap.Add(key2, false);
-                    key2 = new Vector3(tileCenters[x, mapSize-1].x + 1, 0, tileCenters[x, mapSize-1].z + 1);
+                    key2 = new Vector3(tileCenters[x, mapSize-1].x, 0, tileCenters[x, mapSize-1].z + 1);
                     WalkableMap.Add(key2, false);
             }
+            WalkableMap.Add(new Vector3(tileCenters[0, 0].x - 1, 0, tileCenters[0, 0].z - 1), false);
+            WalkableMap.Add(new Vector3(tileCenters[0, mapSize-1].x - 1, 0, tileCenters[0, mapSize-1].z + 1), false);
+            WalkableMap.Add(new Vector3(tileCenters[mapSize-1, 0].x + 1, 0, tileCenters[mapSize-1, 0].z - 1), false);
+            WalkableMap.Add(new Vector3(tileCenters[mapSize-1, mapSize-1].x + 1, 0, tileCenters[mapSize-1, mapSize-1].z + 1), false);
         }
 
         public void GetInfo(){
@@ -66,6 +70,5 @@ namespace Entities{
                         n++;
             return n;
         }
-
     }
 }

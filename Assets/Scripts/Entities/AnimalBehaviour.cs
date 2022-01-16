@@ -27,6 +27,10 @@ namespace Entities{
                 newDirection = Directions[weightedRandomDirection()];
                 Vector3 newTranslation = transform.position + newDirection;
                 Vector3 key = new Vector3((Mathf.Floor(newTranslation.x) + 0.5f), 0, (Mathf.Floor(newTranslation.z) + 0.5f));
+                
+                if(!WalkableMap.ContainsKey(key))
+                    Debug.Log(key);
+
                 while(!WalkableMap[key]){
                         newDirection = Directions[weightedRandomDirection()];
                         newTranslation = transform.position + newDirection;
@@ -85,6 +89,7 @@ namespace Entities{
 
             yield return new WaitForSeconds((float)Random.Range(stopInterval[0], stopInterval[1]));
             onTheMove = !onTheMove;
+            needsUpdate = true;
             coroutineIsRunnig = false;
         }
         

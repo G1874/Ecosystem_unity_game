@@ -300,8 +300,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TreePrefab: {fileID: 1045936233256911219, guid: fdaf5890fe141d84da03c2f55d2db161, type: 3}
+  PlantPrefab: {fileID: 0}
   DeerPrefab: {fileID: 7946006809734418273, guid: ef35c48d8c8faeb459bfa382d359fba2, type: 3}
-  population: 100
+  WolfPrefab: {fileID: 0}
+  treePopulation: 10
+  plantPopulation: 70
+  deerPopulation: 60
+  wolfPopulation: 0
   SpawnOnStart: 1
 --- !u!4 &730629457
 Transform:
@@ -863,7 +868,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2985458746846727966, guid: 49dcb6a09922414438a4869fc4ba0ae7, type: 3}
       propertyPath: movementSpeed
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2985458746846727966, guid: 49dcb6a09922414438a4869fc4ba0ae7, type: 3}
       propertyPath: stopInterval.Array.data[0]
@@ -930,6 +935,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 350081208629264404, guid: ef35c48d8c8faeb459bfa382d359fba2, type: 3}
+      propertyPath: movementSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 350081208629264404, guid: ef35c48d8c8faeb459bfa382d359fba2, type: 3}
       propertyPath: stopInterval.Array.data[0]
       value: 2

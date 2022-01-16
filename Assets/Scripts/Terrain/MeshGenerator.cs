@@ -8,8 +8,7 @@ namespace Terrain{
     public class MeshGenerator{
         public static MeshData GenerateTerrainMesh(int mapSize, float[, ] heightMap, MapGenerator.TerrainType[] regions, float waterDepth, float edgeDepth){
             
-            int numTilesPerLine = Mathf.CeilToInt(mapSize);
-            float min = -numTilesPerLine / 2f;
+            float min = -mapSize / 2f;
             
             List<Vector3> vertices = new List<Vector3>();
             List<int> triangles = new List<int>();
@@ -20,8 +19,8 @@ namespace Terrain{
 
             MeshData meshData = new MeshData(mapSize);
 
-            for(int y=0; y<numTilesPerLine; y++){
-                for(int x=0; x<numTilesPerLine; x++){
+            for(int y=0; y<mapSize; y++){
+                for(int x=0; x<mapSize; x++){
                     Vector2 uv = RegionUv(heightMap[x,y], regions);
                     uvs.AddRange (new Vector2[] { uv, uv, uv, uv });
 
@@ -46,12 +45,12 @@ namespace Terrain{
                     triangles.Add(vertexIndex + 3);
                     triangles.Add(vertexIndex + 2);
 
-                    bool isEdgeTile = x == 0 || x == numTilesPerLine - 1 || y == 0 || y == numTilesPerLine;
+                    bool isEdgeTile = x == 0 || x == mapSize - 1 || y == 0 || y == mapSize;
                     if(isLandTile || isEdgeTile){
                         for(int i=0; i<nswe.Length; i++){
                             int neighbourX = x + (int)nswe[i].x;
                             int neighbourY = y + (int)nswe[i].y;
-                            bool neighbourIsOutOfBounds = neighbourX < 0 || neighbourX >= numTilesPerLine || neighbourY < 0 || neighbourY >= numTilesPerLine;
+                            bool neighbourIsOutOfBounds = neighbourX < 0 || neighbourX >= mapSize || neighbourY < 0 || neighbourY >= mapSize;
                             bool neighbourIsWater = false;
                             if(!neighbourIsOutOfBounds){
                                 float neighbourHeight = heightMap[neighbourX, neighbourY];

@@ -6,7 +6,9 @@ namespace Environment{
     public class EntitySpawner : MonoBehaviour
     {
         [SerializeField]
-        GameObject TreePrefab; 
+        GameObject TreePrefab;
+        [SerializeField]
+        GameObject DeerPrefab;
         public int population = 50;
         public bool SpawnOnStart = false;
         EnvironmentMaps environmentMap = new EnvironmentMaps();
@@ -14,7 +16,6 @@ namespace Environment{
         void Start(){
             environmentMap.GetInfo();
             TreeMap treeMap = new TreeMap(environmentMap.mapSize);
-            Debuger();
 
             if(SpawnOnStart)
                 initialSpawn(environmentMap.mapSize, environmentMap.tileCenters, environmentMap.walkable, treeMap);
@@ -29,20 +30,12 @@ namespace Environment{
                 x = Random.Range(0, mapSize);
                 y = Random.Range(0, mapSize);
                 if(environmentMap.walkable[x, y] && !treeMap.isTree(x, y)){
-                    GameObject.Instantiate(TreePrefab, environmentMap.tileCenters[x, y] + new Vector3(0, 0.01f, 0), transform.rotation = Quaternion.Euler(-89.98f, 0, 0));
+                    GameObject.Instantiate(TreePrefab, environmentMap.tileCenters[x, y] + new Vector3(0, 0.01f, 0), Quaternion.Euler(-89.98f, 0, 0));
                     treeMap.addTree(x, y);
                 }
                 else{
                     i--;
                 } 
-            }
-        }
-
-        public void Debuger(){
-            for(int y=0; y<environmentMap.mapSize; y++){
-                for(int x=0; x<environmentMap.mapSize; x++){
-                    Debug.Log(environmentMap.tileCenters[x, y]);
-                }
             }
         }
     }

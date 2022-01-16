@@ -6,80 +6,87 @@ namespace Environment{
     public class AnimalBehaviour : MonoBehaviour
     {
         public float movementSpeed = 0.5f;
-        public float rotationSpeed = 1f;
+        public float rotationSpeed = 0.2f;
         EnvironmentMaps environmentMap = new EnvironmentMaps();
-        float newDirection;
-        float rotationTurn;
+        Vector3 newDirection;
         bool needsUpdate;
-        
-        float weightedRandomDirection(){
-            int randomNumber = Random.Range(-18, 18);
-            float randomDirection;
-            if(randomNumber != 0)
-                randomDirection = (float)360/randomNumber;
-            else
-                randomDirection = 0;
+        bool objectRotated;  
+        Vector3[] Directions = new Vector3[]{new Vector3(1f, 0, 0),new  Vector3(-1f, 0, 0),new  Vector3(0, 0, 1f),new  Vector3(0, 0, -1f),new  Vector3(1f, 0, 1f),new  Vector3(1f, 0, -1f),new  Vector3(-1f, 0, 1f),new  Vector3(1f, 0, -1f)};
 
+        int weightedRandomDirection(){
+            int randomDirection = Random.Range(0, 8);
             return randomDirection;
         }
 
-        // void Direction(Dictionary<float, bool> WalkableMap){
-        //     Vector3 newTranslation = new Vector3();
-
-        //     if(needsUpdate){
-        //         newDirection = weightedRandomDirection();
-        //         newTranslation = Quaternion.Euler(0, transform.localEulerAngles.y + newDirection, 0) * transform.forward;
-        //         float key = (Mathf.Floor(newTranslation.x) + 0.5f) * 1000 + (Mathf.Floor(newTranslation.z) + 0.5f);
-        //         while(true){
-        //             if(WalkableMap[key])
-        //                 break;
-        //             else{
-        //                 newDirection = weightedRandomDirection();
-        //                 newTranslation = Quaternion.Euler(0, transform.localEulerAngles.y + newDirection, 0) * transform.forward;
-        //                 key = (Mathf.Floor(newTranslation.x) + 0.5f) * 1000 + (Mathf.Floor(newTranslation.z) + 0.5f);
-        //             }
-        //         }
-        //         rotationTurn = Mathf.Sign(newDirection);
-        //         needsUpdate = false;
-        //     }
-        // }
-
-        public void Move(){
-            if(newDirection != 0){
-                float temporaryRotation = rotationSpeed * Time.deltaTime;
-                newDirection = Mathf.Abs(newDirection - temporaryRotation);
-                if(newDirection > 0){
-                    transform.Rotate(0, rotationTurn * temporaryRotation, 0);
+        void getNewDirection(Dictionary<Vector3, bool> WalkableMap){
+            if(needsUpdate){
+                newDirection = Directions[weightedRandomDirection()];
+                Vector3 newTranslation = transform.position + newDirection;
+                Vector3 key = new Vector3((Mathf.Floor(newTranslation.x) + 0.5f), 0, (Mathf.Floor(newTranslation.z) + 0.5f));
+                while(!WalkableMap[key]){
+                        newDirection = Directions[weightedRandomDirection()];
+                        newTranslation = transform.position + newDirection;
+                        key = new Vector3((Mathf.Floor(newTranslation.x) + 0.5f), 0, (Mathf.Floor(newTranslation.z) + 0.5f));
                 }
-                else{
-                    temporaryRotation = temporaryRotation + newDirection;
-                    transform.Rotate(0, rotationTurn * temporaryRotation , 0);
-                    newDirection = 0;
-                }
+                needsUpdate = false;
+                objectRotated = false;
             }
             else{
-                transform.position += transform.forward * movementSpeed * Time.deltaTime;
-            }    
+                Vector3 newTranslation = transform.position + transform.forward;
+                Vector3 key = new Vector3((Mathf.Floor(newTranslation.x) + 0.5f), 0, (Mathf.Floor(newTranslation.z) + 0.5f));
+                if(!WalkableMap[key])
+                    needsUpdate = true;
+                else
+                    newDirection = new Vector3(0, 0, 0);
+            }
         }
+
+        // public void RotateObject(){
+        //     if(newDirection != Vector3.Zero)
+        //         var targetRotation = Quaternion.LookRotation(newDirection);
+        //     Quaternion
+        // }
+
+        // IEnumerator RotateObject(float inTime){
+        //     if(newDirection != Vector3.zero){
+        //         var targetRotation = Quaternion.LookRotation(newDirection);
+        //         for(float t = 0f; t < 1; t += Time.deltaTime/inTime){
+        //             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, t);
+        //             yield return null;
+        //         }
+        //     }
+        //     objectRotated = true;
+        // }
+
+
+        // public bool CanMove(Dictionary<Vector3, bool> WalkableMap){
+        //     Vector3 newTranslation = transform.position + transform.forward;
+        //     Vector3 key = new Vector3((Mathf.Floor(newTranslation.x) + 0.5f), 0, (Mathf.Floor(newTranslation.z) + 0.5f));
+        //     if(WalkableMap[key])
+        //         return true;
+        //     else
+        //         return false;
+        // }
 
         void Start()
         {
-            needsUpdate = true;
-            // environmentMap.GetInfo();
-            // environmentMap.CreateWalkableMap();
-            // // foreach (KeyValuePair<float[], bool> kvp in environmentMap.WalkableMap)
-            // // {
-            // //     Debug.Log(kvp.Key[0] + " " + kvp.Key[1] + " is walkable = " + kvp.Value);
-            // // }   
+            needsUpdate = false;
+            objectRotated = true;
+            environmentMap.GetInfo();
+            environmentMap.CreateWalkableMap();
         }
 
         
-        // void Update()
-        // {
-        //     environmentMap.GetInfo();
-        //     environmentMap.CreateWalkableMap();
-        //     Direction(environmentMap.WalkableMap);
-        //     Move();
-        // }
+        void Update()
+        {   
+            getNewDirection(environmentMap.WalkableMap);
+            if(!objectRotated && !needsUpdate){
+                // RotateObject(0.1f);
+                transform.rotation = Quaternion.LookRotation(newDirection);
+                objectRotated = true;
+            }
+            else if(objectRotated && !needsUpdate)
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, movementSpeed * Time.deltaTime);
+        }
     }
 }

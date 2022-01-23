@@ -71,4 +71,25 @@ namespace Entities{
             return n;
         }
     }
+
+    public class EdiblePlantMap{
+        public bool[, ] plantMap;
+        public EdiblePlantMap(int mapSize){
+            plantMap = new bool[mapSize, mapSize];
+            for (int y=0; y<mapSize; y++) 
+                for (int x=0; x<mapSize; x++)
+                    plantMap[x, y] = false;
+        }
+        public void addPlant(int x, int y){
+            plantMap[x, y] = true;
+        }
+        public int plantNumber(){
+            int n = 0;
+            for (int y=0; y<plantMap.GetLength(0); y++) 
+                for (int x=0; x<plantMap.GetLength(1); x++)
+                    if(plantMap[x, y])
+                        n++;
+            return n;
+        } 
+    }
 }

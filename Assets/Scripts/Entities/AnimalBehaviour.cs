@@ -16,10 +16,19 @@ namespace Entities{
         bool onTheMove = false;
         bool coroutineIsRunnig = false;
 
+        public int hunger = 100;
+        public int thirst = 100;
+        public int urgeToReproduce = 100;
+        public int vitality = 100;
+        public int stamina = 100;
 
         int weightedRandomDirection(){
             int randomDirection = Random.Range(0, 8);
             return randomDirection;
+        }
+
+        Vector3[] findShortestPath(){
+            return null;
         }
 
         void getNewDirection(Dictionary<Vector3, bool> WalkableMap){

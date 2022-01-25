@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic; 
+using UnityEngine;
+
+
+namespace Entities{
+    [System.Serializable]
+    public class SpawnSettings{
+        GameObject TreePrefab;
+        GameObject PlantPrefab;
+        GameObject DeerPrefab;
+        GameObject WolfPrefab;
+        public int treePopulation = 50;
+        public int deerPopulation = 30;
+        public int wolfPopulation = 10;
+        public int initialEdiblePlantPopulation = 50;
+        public float plantGrowTime = 10f;
+        public int plantGrowRate = 2;
+        public int maxPlantPopulation = 100;
+        public bool SpawnOnStart = false;
+    }
+}

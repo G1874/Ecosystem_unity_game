@@ -4,13 +4,15 @@ using UnityEngine;
 
 
 namespace Entities{
-    public class EntityMap
+    public static class EntityMap
     {
         public static int mapSize;
         public static bool[, ] walkable;
         public static Vector3[, ] tileCenters;
         public static Dictionary<Vector3, bool> WalkableMap = new Dictionary<Vector3, bool>();
-        
+        public static bool[, ] treeMap;
+        public static bool[, ] plantMap;
+
         public static void CreateWalkableMap(){
             for(int y=0; y<mapSize; y++){
                 for(int x=0; x<mapSize; x++){
@@ -45,24 +47,20 @@ namespace Entities{
             mapSize = mapGenerator.mapSize;
             walkable = mapGenerator.meshData.walkable;
             tileCenters = mapGenerator.meshData.tileCenters;
-        }
-    }
 
-    public class TreeMap{       
-        bool[, ] treeMap;
-        public TreeMap(int mapSize){
             treeMap = new bool[mapSize, mapSize];
+            plantMap = new bool[mapSize, mapSize];
             for (int y=0; y<mapSize; y++) 
-                for (int x=0; x<mapSize; x++)
+                for (int x=0; x<mapSize; x++){
                     treeMap[x, y] = false;
+                    plantMap[x, y] = false;
+                }
         }
-        public void addTree(int x, int y){
+
+        public static void addTree(int x, int y){
             treeMap[x, y] = true;
         }
-        public bool isTree(int x, int y){
-            return treeMap[x, y];
-        }
-        public int treeNumber(){
+        public static int treeNumber(){
             int n = 0;
             for (int y=0; y<treeMap.GetLength(0); y++) 
                 for (int x=0; x<treeMap.GetLength(1); x++)
@@ -70,20 +68,11 @@ namespace Entities{
                         n++;
             return n;
         }
-    }
 
-    public class EdiblePlantMap{
-        public bool[, ] plantMap;
-        public EdiblePlantMap(int mapSize){
-            plantMap = new bool[mapSize, mapSize];
-            for (int y=0; y<mapSize; y++) 
-                for (int x=0; x<mapSize; x++)
-                    plantMap[x, y] = false;
-        }
-        public void addPlant(int x, int y){
+        public static void addPlant(int x, int y){
             plantMap[x, y] = true;
         }
-        public int plantNumber(){
+        public static int plantNumber(){
             int n = 0;
             for (int y=0; y<plantMap.GetLength(0); y++) 
                 for (int x=0; x<plantMap.GetLength(1); x++)
@@ -92,4 +81,49 @@ namespace Entities{
             return n;
         } 
     }
+
+    // public class TreeMap{       
+    //     static bool[, ] treeMap;
+    //     public TreeMap(int mapSize){
+    //         treeMap = new bool[mapSize, mapSize];
+    //         for (int y=0; y<mapSize; y++) 
+    //             for (int x=0; x<mapSize; x++)
+    //                 treeMap[x, y] = false;
+    //     }
+    //     public void addTree(int x, int y){
+    //         treeMap[x, y] = true;
+    //     }
+    //     public bool isTree(int x, int y){
+    //         return treeMap[x, y];
+    //     }
+    //     public int treeNumber(){
+    //         int n = 0;
+    //         for (int y=0; y<treeMap.GetLength(0); y++) 
+    //             for (int x=0; x<treeMap.GetLength(1); x++)
+    //                 if(treeMap[x, y])
+    //                     n++;
+    //         return n;
+    //     }
+    // }
+
+    // public class EdiblePlantMap{
+    //     public bool[, ] plantMap;
+    //     public EdiblePlantMap(int mapSize){
+    //         plantMap = new bool[mapSize, mapSize];
+    //         for (int y=0; y<mapSize; y++) 
+    //             for (int x=0; x<mapSize; x++)
+    //                 plantMap[x, y] = false;
+    //     }
+    //     public void addPlant(int x, int y){
+    //         plantMap[x, y] = true;
+    //     }
+    //     public int plantNumber(){
+    //         int n = 0;
+    //         for (int y=0; y<plantMap.GetLength(0); y++) 
+    //             for (int x=0; x<plantMap.GetLength(1); x++)
+    //                 if(plantMap[x, y])
+    //                     n++;
+    //         return n;
+    //     } 
+    // }
 }

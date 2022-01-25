@@ -6,12 +6,12 @@ using UnityEngine;
 namespace Entities{
     public class EntityMap
     {
-        public int mapSize;
-        public bool[, ] walkable;
-        public Vector3[, ] tileCenters;
-        public Dictionary<Vector3, bool> WalkableMap = new Dictionary<Vector3, bool>();
+        public static int mapSize;
+        public static bool[, ] walkable;
+        public static Vector3[, ] tileCenters;
+        public static Dictionary<Vector3, bool> WalkableMap = new Dictionary<Vector3, bool>();
         
-        public void CreateWalkableMap(){
+        public static void CreateWalkableMap(){
             for(int y=0; y<mapSize; y++){
                 for(int x=0; x<mapSize; x++){
                     Vector3 key = new Vector3(tileCenters[x, y].x, 0, tileCenters[x, y].z);
@@ -39,7 +39,7 @@ namespace Entities{
             WalkableMap.Add(new Vector3(tileCenters[mapSize-1, mapSize-1].x + 1, 0, tileCenters[mapSize-1, mapSize-1].z + 1), false);
         }
 
-        public void GetInfo(){
+        public static void GetInfo(){
             GameObject generateMap = GameObject.Find("Generate Map");
             Terrain.MapGenerator mapGenerator = generateMap.GetComponent<Terrain.MapGenerator>();
             mapSize = mapGenerator.mapSize;
@@ -49,7 +49,7 @@ namespace Entities{
     }
 
     public class TreeMap{       
-        bool[, ] treeMap;
+        static bool[, ] treeMap;
         public TreeMap(int mapSize){
             treeMap = new bool[mapSize, mapSize];
             for (int y=0; y<mapSize; y++) 

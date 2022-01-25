@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Entities{
     public class AnimalBehaviour : MonoBehaviour
     {
-        protected EntityMap entityMap = new EntityMap();
         protected bool needsUpdate;
         protected bool objectRotated;
         protected Vector3 newDirection;
@@ -112,7 +111,7 @@ namespace Entities{
         }
         
         protected void Move(){
-            getNewDirection(entityMap.WalkableMap);
+            getNewDirection(EntityMap.WalkableMap);
             if(!objectRotated && !needsUpdate){
                 // RotateObject(0.1f);
                 transform.rotation = Quaternion.LookRotation(newDirection);

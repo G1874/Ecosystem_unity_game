@@ -19,7 +19,6 @@ namespace Entities{
         public int plantGrowRate = 2;
         public int maxPlantPopulation = 100;
         public bool SpawnOnStart = false;
-        public EntityMap entityMap = new EntityMap();
         TreeMap treeMap;
         EdiblePlantMap plantMap;
         int mapSize;
@@ -27,15 +26,17 @@ namespace Entities{
         bool[, ] walkable;
         bool coroutineIsRunnig = false;
         void Start(){
-            entityMap.GetInfo();
-            mapSize = entityMap.mapSize;
-            tileCenters = entityMap.tileCenters;
-            walkable = entityMap.walkable;
+            EntityMap.GetInfo();
+            mapSize = EntityMap.mapSize;
+            tileCenters = EntityMap.tileCenters;
+            walkable = EntityMap.walkable;
             treeMap = new TreeMap(mapSize);
             plantMap = new EdiblePlantMap(mapSize);
 
             if(SpawnOnStart)
                 initialSpawn(treeMap, plantMap);
+            
+            EntityMap.CreateWalkableMap();
         }
 
         void Update(){
@@ -54,11 +55,11 @@ namespace Entities{
                 if(walkable[x, y]){
                     n = Random.Range(0, 10);
                     if(n>=0 && n<2)
-                        GameObject.Instantiate(RockPrefab, entityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
+                        GameObject.Instantiate(RockPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
                     else if(n>=2 && n<6)
-                        GameObject.Instantiate(Tree1Prefab, entityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
+                        GameObject.Instantiate(Tree1Prefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
                     else
-                        GameObject.Instantiate(Tree2Prefab, entityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
+                        GameObject.Instantiate(Tree2Prefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
 
                     treeMap.addTree(x, y);
                     walkable[x, y] = false;
@@ -72,7 +73,7 @@ namespace Entities{
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(walkable[x, y] && !plantMap.plantMap[x, y]){
-                    GameObject.Instantiate(EdiblePlantPrefab, entityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
+                    GameObject.Instantiate(EdiblePlantPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
                     plantMap.addPlant(x, y);
                 }
                 else{
@@ -85,7 +86,7 @@ namespace Entities{
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(animalSpawnMap[x, y]){
-                    GameObject.Instantiate(DeerPrefab, entityMap.tileCenters[x, y], Quaternion.Euler(0, 0, 0));
+                    GameObject.Instantiate(DeerPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(0, 0, 0));
                     animalSpawnMap[x, y] = false;
                 }
                 else{
@@ -97,7 +98,7 @@ namespace Entities{
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(animalSpawnMap[x, y]){
-                    GameObject.Instantiate(WolfPrefab, entityMap.tileCenters[x, y], Quaternion.Euler(0, 0, 0));
+                    GameObject.Instantiate(WolfPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(0, 0, 0));
                     animalSpawnMap[x, y] = false;
                 }
                 else{
@@ -118,7 +119,7 @@ namespace Entities{
                     x = Random.Range(0, mapSize-1);
                     y = Random.Range(0, mapSize-1);
                     if(walkable[x, y] && !plantMap.plantMap[x, y]){
-                        GameObject.Instantiate(EdiblePlantPrefab, entityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
+                        GameObject.Instantiate(EdiblePlantPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
                         plantMap.addPlant(x, y);
                     }
                     else{

@@ -12,7 +12,7 @@ namespace Entities{
         }
 
         void scanForPredators(){
-            
+
         }
 
         IEnumerator scanSurroundings(){
@@ -27,8 +27,6 @@ namespace Entities{
         {
             needsUpdate = false;
             objectRotated = true;
-            entityMap.GetInfo();
-            entityMap.CreateWalkableMap();
         }
 
         void Update()

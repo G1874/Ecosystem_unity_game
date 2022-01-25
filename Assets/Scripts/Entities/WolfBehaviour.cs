@@ -9,8 +9,6 @@ namespace Entities{
         {
             needsUpdate = false;
             objectRotated = true;
-            entityMap.GetInfo();
-            entityMap.CreateWalkableMap();
         }
 
         

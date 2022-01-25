@@ -49,7 +49,7 @@ namespace Entities{
     }
 
     public class TreeMap{       
-        static bool[, ] treeMap;
+        bool[, ] treeMap;
         public TreeMap(int mapSize){
             treeMap = new bool[mapSize, mapSize];
             for (int y=0; y<mapSize; y++) 

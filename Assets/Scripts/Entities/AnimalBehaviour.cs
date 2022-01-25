@@ -113,7 +113,6 @@ namespace Entities{
         protected void Move(){
             getNewDirection(EntityMap.WalkableMap);
             if(!objectRotated && !needsUpdate){
-                // RotateObject(0.1f);
                 transform.rotation = Quaternion.LookRotation(newDirection);
                 objectRotated = true;
             }

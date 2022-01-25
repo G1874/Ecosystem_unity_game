@@ -11,6 +11,7 @@ namespace Entities{
         [SerializeField] GameObject EdiblePlantPrefab;
         [SerializeField] GameObject DeerPrefab;
         [SerializeField] GameObject WolfPrefab;
+        [SerializeField] GameObject DebugingCube;
         public int treePopulation = 50;
         public int deerPopulation = 30;
         public int wolfPopulation = 10;
@@ -37,6 +38,8 @@ namespace Entities{
                 initialSpawn(treeMap, plantMap);
             
             EntityMap.CreateWalkableMap();
+
+            //DebugingTool();
         }
 
         void Update(){
@@ -55,11 +58,11 @@ namespace Entities{
                 if(walkable[x, y]){
                     n = Random.Range(0, 10);
                     if(n>=0 && n<2)
-                        GameObject.Instantiate(RockPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
+                        GameObject.Instantiate(RockPrefab, tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
                     else if(n>=2 && n<6)
-                        GameObject.Instantiate(Tree1Prefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
+                        GameObject.Instantiate(Tree1Prefab, tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
                     else
-                        GameObject.Instantiate(Tree2Prefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
+                        GameObject.Instantiate(Tree2Prefab, tileCenters[x, y], Quaternion.Euler(-89.98f, (float)Random.Range(-179, 180), 0));
 
                     treeMap.addTree(x, y);
                     walkable[x, y] = false;
@@ -73,7 +76,7 @@ namespace Entities{
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(walkable[x, y] && !plantMap.plantMap[x, y]){
-                    GameObject.Instantiate(EdiblePlantPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
+                    GameObject.Instantiate(EdiblePlantPrefab, tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
                     plantMap.addPlant(x, y);
                 }
                 else{
@@ -86,7 +89,7 @@ namespace Entities{
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(animalSpawnMap[x, y]){
-                    GameObject.Instantiate(DeerPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(0, 0, 0));
+                    GameObject.Instantiate(DeerPrefab, tileCenters[x, y], Quaternion.Euler(0, 0, 0));
                     animalSpawnMap[x, y] = false;
                 }
                 else{
@@ -98,7 +101,7 @@ namespace Entities{
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(animalSpawnMap[x, y]){
-                    GameObject.Instantiate(WolfPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(0, 0, 0));
+                    GameObject.Instantiate(WolfPrefab, tileCenters[x, y], Quaternion.Euler(0, 0, 0));
                     animalSpawnMap[x, y] = false;
                 }
                 else{
@@ -119,7 +122,7 @@ namespace Entities{
                     x = Random.Range(0, mapSize-1);
                     y = Random.Range(0, mapSize-1);
                     if(walkable[x, y] && !plantMap.plantMap[x, y]){
-                        GameObject.Instantiate(EdiblePlantPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
+                        GameObject.Instantiate(EdiblePlantPrefab, tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
                         plantMap.addPlant(x, y);
                     }
                     else{
@@ -128,6 +131,13 @@ namespace Entities{
                 }
             yield return new WaitForSeconds(plantGrowTime);
             coroutineIsRunnig = false;
+        }
+
+        void DebugingTool(){
+            for(int y=0; y<mapSize; y++)
+                for(int x=0; x<mapSize; x++)
+                    if(!walkable[x, y])
+                        GameObject.Instantiate(DebugingCube, new Vector3(0, 2f, 0) + tileCenters[x, y], Quaternion.Euler(0, 0, 0));
         }
     }
 }

@@ -38,17 +38,18 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Terrain\TextureGenerator.cs" />
      <Compile Include="Assets\Scripts\Terrain\MapGenerator.cs" />
+     <Compile Include="Assets\Scripts\Entities\WolfBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Entities\EntityMap.cs" />
      <Compile Include="Assets\Scripts\Terrain\HeightmapGenerator.cs" />
      <Compile Include="Assets\Scripts\Entities\EntitySpawner.cs" />
      <Compile Include="Assets\Scripts\Terrain\MeshGenerator.cs" />
      <Compile Include="Assets\Scripts\Camera\FreeCamera.cs" />
+     <Compile Include="Assets\Scripts\Entities\DeerBehaviour.cs" />
      <Compile Include="Assets\Scripts\Terrain\NoiseSettings.cs" />
      <Compile Include="Assets\Scripts\Entities\AnimalBehaviour.cs" />
      <Compile Include="Assets\Scripts\Terrain\MapDisplay.cs" />
      <Compile Include="Assets\Scripts\Tests\TestSpawner.cs" />
-     <Compile Include="Assets\Scripts\Entities\DeerBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Entities\WolfBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Entities\EntityMap.cs" />
+     <Compile Include="Assets\Scripts\Entities\DebugingTool.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

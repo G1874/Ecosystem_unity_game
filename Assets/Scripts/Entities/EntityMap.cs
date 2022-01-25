@@ -44,7 +44,7 @@ namespace Entities{
             Terrain.MapGenerator mapGenerator = generateMap.GetComponent<Terrain.MapGenerator>();
             mapSize = mapGenerator.mapSize;
             walkable = mapGenerator.meshData.walkable;
-            tileCenters = mapGenerator. meshData.tileCenters;
+            tileCenters = mapGenerator.meshData.tileCenters;
         }
     }
 

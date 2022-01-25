@@ -17,7 +17,7 @@ namespace Entities{
         public int plantGrowRate = 2;
         public int maxPlantPopulation = 100;
         public bool SpawnOnStart = false;
-        EntityMap entityMap = new EntityMap();
+        public EntityMap entityMap = new EntityMap();
         TreeMap treeMap;
         EdiblePlantMap plantMap;
         int mapSize;

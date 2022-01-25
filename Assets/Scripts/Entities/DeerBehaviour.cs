@@ -5,6 +5,39 @@ using UnityEngine;
 namespace Entities{
     public class DeerBehaviour : AnimalBehaviour
     {
-        
+        bool coroutineIsRunnig = false;
+
+        void findEdibles(){
+            
+        }
+
+        void scanForPredators(){
+            
+        }
+
+        IEnumerator scanSurroundings(){
+            coroutineIsRunnig = true;
+
+
+            yield return new WaitForSeconds(1f);
+            coroutineIsRunnig = false;
+        }
+
+        void Start()
+        {
+            needsUpdate = false;
+            objectRotated = true;
+            entityMap.GetInfo();
+            entityMap.CreateWalkableMap();
+        }
+
+        void Update()
+        {   
+            casualMovement();
+            if(!coroutine2IsRunnig)
+                StartCoroutine(changeSurvivalParameters());
+            if(hunger <= 0)
+                Death();
+        }
     }
 }

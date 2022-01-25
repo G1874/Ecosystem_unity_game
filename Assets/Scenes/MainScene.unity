@@ -300,13 +300,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TreePrefab: {fileID: 8049599312130465156, guid: 35a6c8778ba80224a9ca9f9485c8212f, type: 3}
-  PlantPrefab: {fileID: 0}
+  PlantPrefab: {fileID: 8842600304504889720, guid: 5e546b2281294e24b9d3104c9fac2379, type: 3}
   DeerPrefab: {fileID: 7946006809734418273, guid: ef35c48d8c8faeb459bfa382d359fba2, type: 3}
   WolfPrefab: {fileID: 4204874401539536419, guid: 49dcb6a09922414438a4869fc4ba0ae7, type: 3}
-  treePopulation: 100
-  plantPopulation: 70
-  deerPopulation: 30
-  wolfPopulation: 10
+  treePopulation: 0
+  deerPopulation: 0
+  wolfPopulation: 0
+  initialEdiblePlantPopulation: 30
+  plantGrowTime: 5
+  plantGrowRate: 1
+  maxPlantPopulation: 200
   SpawnOnStart: 1
 --- !u!4 &730629457
 Transform:

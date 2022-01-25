@@ -5,40 +5,40 @@ using UnityEngine;
 namespace Entities{
     public class AnimalBehaviour : MonoBehaviour
     {
-        public float movementSpeed = 3f;
-        public float rotationSpeed = 0.2f;
-        EntityMap entityMap = new EntityMap();
-        bool needsUpdate;
-        bool objectRotated;
-        Vector3 newDirection;
-        Vector3[] Directions = new Vector3[]{new Vector3(1f, 0, 0),new  Vector3(-1f, 0, 0),new  Vector3(0, 0, 1f),new  Vector3(0, 0, -1f),new  Vector3(1f, 0, 1f),new  Vector3(1f, 0, -1f),new  Vector3(-1f, 0, 1f),new  Vector3(1f, 0, -1f)};
+        protected EntityMap entityMap = new EntityMap();
+        protected bool needsUpdate;
+        protected bool objectRotated;
+        protected Vector3 newDirection;
+        protected Vector3[] Directions = new Vector3[]{new Vector3(1f, 0, 0),new  Vector3(-1f, 0, 0),new  Vector3(0, 0, 1f),new  Vector3(0, 0, -1f),new  Vector3(1f, 0, 1f),new  Vector3(1f, 0, -1f),new  Vector3(-1f, 0, 1f),new  Vector3(1f, 0, -1f)};
         public int[] stopInterval = {1, 3};
-        bool onTheMove = false;
-        bool coroutineIsRunnig = false;
+        protected bool onTheMove = false;
+        protected bool coroutine1IsRunnig = false;
+        protected bool coroutine2IsRunnig = false;
 
-        public int hunger = 100;
-        public int thirst = 100;
-        public int urgeToReproduce = 100;
+
+        public float casualMovementSpeed = 5f;
+        public float fastMovementSpeed = 10f;
+        public float valueChangeRate = 5f;
+        public int hunger = 25;
+        public int thirst = 25;
+        public int urgeToReproduce = 35;
         public int vitality = 100;
         public int stamina = 100;
 
-        int weightedRandomDirection(){
+        protected int weightedRandomDirection(){
             int randomDirection = Random.Range(0, 8);
             return randomDirection;
         }
 
-        Vector3[] findShortestPath(){
+        protected Vector3[] findShortestPath(){
             return null;
         }
 
-        void getNewDirection(Dictionary<Vector3, bool> WalkableMap){
+        protected void getNewDirection(Dictionary<Vector3, bool> WalkableMap){
             if(needsUpdate){
                 newDirection = Directions[weightedRandomDirection()];
                 Vector3 newTranslation = transform.position + newDirection;
                 Vector3 key = new Vector3((Mathf.Floor(newTranslation.x) + 0.5f), 0, (Mathf.Floor(newTranslation.z) + 0.5f));
-                
-                if(!WalkableMap.ContainsKey(key))
-                    Debug.Log(key);
 
                 while(!WalkableMap[key]){
                         newDirection = Directions[weightedRandomDirection()];
@@ -56,6 +56,16 @@ namespace Entities{
                 else
                     newDirection = new Vector3(0, 0, 0);
             }
+        }
+
+        protected IEnumerator changeSurvivalParameters(){
+            coroutine2IsRunnig = true;
+            hunger--;
+            thirst--;
+            urgeToReproduce--;
+            vitality--;
+            yield return new WaitForSeconds(valueChangeRate);
+            coroutine2IsRunnig = false;
         }
 
         // public void RotateObject(){
@@ -85,47 +95,36 @@ namespace Entities{
         //         return false;
         // }
 
-        void casualMovement(){
+        protected void casualMovement(){
+            if(!coroutine1IsRunnig)
             StartCoroutine(StopRandomly());
             if(onTheMove)
                 Move();
         }
 
-        IEnumerator StopRandomly(){
-            if(coroutineIsRunnig)
-                yield break;
-            coroutineIsRunnig = true;
+        protected IEnumerator StopRandomly(){
+            coroutine1IsRunnig = true;
 
             yield return new WaitForSeconds((float)Random.Range(stopInterval[0], stopInterval[1]));
             onTheMove = !onTheMove;
             needsUpdate = true;
-            coroutineIsRunnig = false;
+            coroutine1IsRunnig = false;
         }
         
-        void Move(){
+        protected void Move(){
             getNewDirection(entityMap.WalkableMap);
             if(!objectRotated && !needsUpdate){
                 // RotateObject(0.1f);
                 transform.rotation = Quaternion.LookRotation(newDirection);
                 objectRotated = true;
             }
-            else if(objectRotated && !needsUpdate)
-                transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, movementSpeed * Time.deltaTime);
+            else if(objectRotated && !needsUpdate){
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, casualMovementSpeed * Time.deltaTime);
+            }
         }
 
-        void Start()
-        {
-            needsUpdate = false;
-            objectRotated = true;
-            entityMap.GetInfo();
-            entityMap.CreateWalkableMap();
-        }
-
-        
-        void Update()
-        {   
-            casualMovement();
-
+        protected void Death(){
+            Destroy(gameObject);
         }
     }
 }

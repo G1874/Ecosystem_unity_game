@@ -5,13 +5,13 @@ using UnityEngine;
 namespace Entities{
     public class DeerBehaviour : AnimalBehaviour
     {
+        public bool changeStatsInEditor;
         bool coroutineIsRunnig = false;
         GameObject nearestEdible;
         GameObject nearestPredator;
         Vector3 nearestWaterTile;
         bool objectRotated2 = false;
 
-        
 
         IEnumerator scanSurroundings(){
             coroutineIsRunnig = true;
@@ -33,13 +33,6 @@ namespace Entities{
 
         void findWater(){
             if(!onTheMove && transform.position!=nearestWaterTile){
-                // Vector3 path = GetPath(transform.position, nearestWaterTile);
-                // if(path.y!=100f)
-                // {
-                //     transform.rotation = Quaternion.LookRotation(path);
-                //     Target = transform.position + path;    
-                //     onTheMove = true;
-                // }
                 if(!objectRotated2){
                     transform.rotation = Quaternion.LookRotation(nearestWaterTile - transform.position);
                     objectRotated2 = true;
@@ -48,15 +41,22 @@ namespace Entities{
                     Target = nearestWaterTile;
                     onTheMove = true;
                 }
-                // Vector3 path = transform.position + transform.forward;
-                // transform.rotation = Quaternion.LookRotation(new Vector3(Mathf.Floor(path.x) + 0.5f, 0, Mathf.Floor(path.z) + 0.5f));
-                // Target = transform.position + new Vector3(Mathf.Floor(path.x) + 0.5f, 0, Mathf.Floor(path.z) + 0.5f);
             }
         }
 
-        void Start()
+        void Awake()
         {
-
+            if(!changeStatsInEditor){
+                visibleDistance = Stats.Deer.visibleDistance;
+                casualMovementSpeed = Stats.Deer.casualMovementSpeed;
+                fastMovementSpeed = Stats.Deer.fastMovementSpeed;
+                valueChangeRate = Stats.Deer.valueChangeRate;
+                hunger = Stats.Deer.hunger;
+                thirst = Stats.Deer.thirst;
+                urgeToReproduce = Stats.Deer.urgeToReproduce;
+                vitality = Stats.Deer.vitality;
+                stamina = Stats.Deer.stamina;
+            }
         }
 
         void Update()

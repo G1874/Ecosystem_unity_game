@@ -12,9 +12,9 @@ namespace Entities{
         [SerializeField] GameObject DeerPrefab;
         [SerializeField] GameObject WolfPrefab;
         [SerializeField] GameObject DebugingCube;
-        public int treePopulation = 50;
-        public int deerPopulation = 30;
-        public int wolfPopulation = 10;
+        public int decorativesPopulation = 50;
+        public int initialDeerPopulation = 30;
+        public int initialWolfPopulation = 10;
         public int initialEdiblePlantPopulation = 50;
         public float plantGrowTime = 10f;
         public int plantGrowRate = 2;
@@ -26,7 +26,19 @@ namespace Entities{
         bool[, ] treeMap;
         bool[, ] plantMap;
         bool coroutineIsRunnig = false;
+        public bool changeStatsInEditor;
+        
         void Start(){
+            if(!changeStatsInEditor){
+                decorativesPopulation = Stats.Environment.decorativesPopulation;
+                initialDeerPopulation = Stats.Deer.initialDeerPopulation;
+                initialWolfPopulation = Stats.Wolf.initialWolfPopulation;
+                initialEdiblePlantPopulation = Stats.Environment.initialEdiblePlantPopulation;
+                plantGrowTime = Stats.Environment.plantGrowTime;
+                plantGrowRate = Stats.Environment.plantGrowRate;
+                maxPlantPopulation = Stats.Environment.maxPlantPopulation;
+            }
+
             EntityMap.GetInfo();
             mapSize = EntityMap.mapSize;
             tileCenters = EntityMap.tileCenters;
@@ -53,7 +65,7 @@ namespace Entities{
             int n;
             bool[, ] animalSpawnMap;
 
-            for(int i=0; i<treePopulation; i++){
+            for(int i=0; i<decorativesPopulation; i++){
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(walkable[x, y]){
@@ -87,7 +99,7 @@ namespace Entities{
             }
 
             animalSpawnMap = walkable;
-            for(int i=0; i<deerPopulation; i++){
+            for(int i=0; i<initialDeerPopulation; i++){
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(animalSpawnMap[x, y]){
@@ -100,7 +112,7 @@ namespace Entities{
                 } 
             }
 
-            for(int i=0; i<wolfPopulation; i++){
+            for(int i=0; i<initialWolfPopulation; i++){
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(animalSpawnMap[x, y]){

@@ -52,6 +52,10 @@
      <Compile Include="Assets\Scripts\UI\SettingsMenu.cs" />
      <Compile Include="Assets\Scripts\Terrain\MapDisplay.cs" />
      <Compile Include="Assets\Scripts\Tests\TestSpawner.cs" />
+     <Compile Include="Assets\Scripts\UI\DeerNumber.cs" />
+     <Compile Include="Assets\Scripts\UI\WolfNumber.cs" />
+     <Compile Include="Assets\Scripts\UI\EndSimulation.cs" />
+     <Compile Include="Assets\Scripts\UI\GoToMenu.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

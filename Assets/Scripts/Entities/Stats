@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Entities{
+    public static class Stats{
+        public static class Deer{
+            public static int initialDeerPopulation = 30;
+            public static float visibleDistance = 10f;
+            public static float casualMovementSpeed = 5f;
+            public static float fastMovementSpeed = 10f;
+            public static float valueChangeRate = 5f;
+            public static int hunger = 25;
+            public static int thirst = 25;
+            public static int urgeToReproduce = 35;
+            public static int vitality = 100;
+            public static int stamina = 100;
+        }
+        public static class Wolf{
+            public static int initialWolfPopulation = 10;
+            public static float visibleDistance = 10f;
+            public static float casualMovementSpeed = 5f;
+            public static float fastMovementSpeed = 10f;
+            public static float valueChangeRate = 5f;
+            public static int hunger = 25;
+            public static int thirst = 25;
+            public static int urgeToReproduce = 35;
+            public static int vitality = 100;
+            public static int stamina = 100;
+        }
+        public static class Environment{
+            public static int decorativesPopulation = 50;
+            public static int initialEdiblePlantPopulation = 50;
+            public static float plantGrowTime = 10f;
+            public static int plantGrowRate = 2;
+            public static int maxPlantPopulation = 100;
+        }
+    }
+}

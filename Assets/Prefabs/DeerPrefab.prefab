@@ -1632,7 +1632,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7281814527497098715}
-  - component: {fileID: 350081208629264404}
+  - component: {fileID: 3880972176700077294}
   m_Layer: 0
   m_Name: DeerPrefab
   m_TagString: Untagged
@@ -1656,7 +1656,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &350081208629264404
+--- !u!114 &3880972176700077294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1668,8 +1668,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b88ad23025706b45bc30210fb66a680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
-  rotationSpeed: 0.2
+  stopInterval: 0100000003000000
+  visibleDistance: 10
+  casualMovementSpeed: 5
+  fastMovementSpeed: 10
+  valueChangeRate: 5
+  hunger: 25
+  thirst: 12
+  urgeToReproduce: 35
+  vitality: 100
+  stamina: 100
 --- !u!1 &8002932212281125912
 GameObject:
   m_ObjectHideFlags: 0

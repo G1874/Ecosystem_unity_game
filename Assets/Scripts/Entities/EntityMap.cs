@@ -9,9 +9,14 @@ namespace Entities{
         public static int mapSize;
         public static bool[, ] walkable;
         public static Vector3[, ] tileCenters;
+        public static Vector3[] waterTiles;
         public static Dictionary<Vector3, bool> WalkableMap = new Dictionary<Vector3, bool>();
         public static bool[, ] treeMap;
         public static bool[, ] plantMap;
+        public static List<GameObject> plants = new List<GameObject>();
+        public static List<GameObject> wolfs = new List<GameObject>();
+        public static List<GameObject> deer = new List<GameObject>();
+
 
         public static void CreateWalkableMap(){
             for(int y=0; y<mapSize; y++){
@@ -50,11 +55,29 @@ namespace Entities{
 
             treeMap = new bool[mapSize, mapSize];
             plantMap = new bool[mapSize, mapSize];
-            for (int y=0; y<mapSize; y++) 
+            for (int y=0; y<mapSize; y++){
                 for (int x=0; x<mapSize; x++){
                     treeMap[x, y] = false;
                     plantMap[x, y] = false;
                 }
+            }
+            int n = 0;
+            for (int y=0; y<mapSize; y++){
+                for (int x=0; x<mapSize; x++){
+                    if(!walkable[x, y])
+                    n++;      
+                }
+            }
+            waterTiles = new Vector3[n];
+            int i = 0;
+            for (int y=0; y<mapSize; y++){
+                for (int x=0; x<mapSize; x++){
+                    if(!walkable[x, y]){
+                        waterTiles[i] = tileCenters[x, y];
+                        i++;
+                    }    
+                }
+            }
         }
 
         public static void addTree(int x, int y){

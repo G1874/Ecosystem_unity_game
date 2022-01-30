@@ -77,8 +77,9 @@ namespace Entities{
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(walkable[x, y] && !plantMap[x, y]){
-                    GameObject.Instantiate(EdiblePlantPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
+                    GameObject newPlant = (GameObject)Instantiate(EdiblePlantPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
                     EntityMap.addPlant(x, y);
+                    EntityMap.plants.Add(newPlant);
                 }
                 else{
                     i--;
@@ -90,8 +91,9 @@ namespace Entities{
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(animalSpawnMap[x, y]){
-                    GameObject.Instantiate(DeerPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(0, 0, 0));
+                    GameObject newDeer = (GameObject)Instantiate(DeerPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(0, 0, 0));
                     animalSpawnMap[x, y] = false;
+                    EntityMap.deer.Add(newDeer);
                 }
                 else{
                     i--;
@@ -102,8 +104,9 @@ namespace Entities{
                 x = Random.Range(0, mapSize-1);
                 y = Random.Range(0, mapSize-1);
                 if(animalSpawnMap[x, y]){
-                    GameObject.Instantiate(WolfPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(0, 0, 0));
+                    GameObject newWolf = (GameObject)Instantiate(WolfPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(0, 0, 0));
                     animalSpawnMap[x, y] = false;
+                    EntityMap.wolfs.Add(newWolf);
                 }
                 else{
                     i--;
@@ -115,7 +118,7 @@ namespace Entities{
             if(coroutineIsRunnig)
                 yield break;
             coroutineIsRunnig = true;
-            Debug.Log(EntityMap.plantNumber());
+            //Debug.Log(EntityMap.plantNumber());
             int x;
             int y;
             if(EntityMap.plantNumber() <= maxPlantPopulation)
@@ -123,8 +126,9 @@ namespace Entities{
                     x = Random.Range(0, mapSize-1);
                     y = Random.Range(0, mapSize-1);
                     if(walkable[x, y] && !plantMap[x, y]){
-                        GameObject.Instantiate(EdiblePlantPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
+                        GameObject newPlant = (GameObject)Instantiate(EdiblePlantPrefab, EntityMap.tileCenters[x, y], Quaternion.Euler(-89.98f, 0, 0));
                         EntityMap.addPlant(x, y);
+                        EntityMap.plants.Add(newPlant);
                     }
                     else{
                         i--;
@@ -135,10 +139,12 @@ namespace Entities{
         }
 
         void DebugingTool(){
-            for(int y=0; y<mapSize; y++)
-                for(int x=0; x<mapSize; x++)
-                    if(!walkable[x, y])
-                        GameObject.Instantiate(DebugingCube, EntityMap.tileCenters[x, y] + new Vector3(0, 2f, 0), Quaternion.Euler(0, 0, 0));
+            // for(int y=0; y<mapSize; y++)
+            //     for(int x=0; x<mapSize; x++)
+            //         if(!walkable[x, y])
+            //             GameObject.Instantiate(DebugingCube, EntityMap.tileCenters[x, y] + new Vector3(0, 2f, 0), Quaternion.Euler(0, 0, 0));
+            for(int i=0; i<EntityMap.waterTiles.Length; i++)
+                GameObject.Instantiate(DebugingCube, EntityMap.waterTiles[i] + new Vector3(0, 2f, 0), Quaternion.Euler(0, 0, 0));
         }
     }
 }

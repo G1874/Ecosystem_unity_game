@@ -50,8 +50,9 @@ namespace Entities{
                 initialSpawn();
             
             EntityMap.CreateWalkableMap();
+            EntityMap.CreateCoord();
 
-            //DebugingTool();
+            DebugingTool();
         }
 
         void Update(){
@@ -155,8 +156,23 @@ namespace Entities{
             //     for(int x=0; x<mapSize; x++)
             //         if(!walkable[x, y])
             //             GameObject.Instantiate(DebugingCube, EntityMap.tileCenters[x, y] + new Vector3(0, 2f, 0), Quaternion.Euler(0, 0, 0));
-            for(int i=0; i<EntityMap.waterTiles.Length; i++)
-                GameObject.Instantiate(DebugingCube, EntityMap.waterTiles[i] + new Vector3(0, 2f, 0), Quaternion.Euler(0, 0, 0));
+
+            // for(int i=0; i<EntityMap.waterTiles.Length; i++)
+            //     GameObject.Instantiate(DebugingCube, EntityMap.waterTiles[i] + new Vector3(0, 2f, 0), Quaternion.Euler(0, 0, 0));
+
+            for(int y=0; y<mapSize; y++){
+                for(int x=0; x<mapSize; x++){
+                    int[] arg = EntityMap.Coord[tileCenters[x, y]];
+                    if(arg[0] == x && arg[1] == y){
+                        Debug.Log(x + "  " + y);
+                    }
+                    else
+                    {
+                        Debug.Log("Problem");
+                        break;
+                    }
+                }
+            }
         }
     }
 }

@@ -57,6 +57,11 @@
      <Compile Include="Assets\Scripts\UI\EndSimulation.cs" />
      <Compile Include="Assets\Scripts\UI\GoToMenu.cs" />
      <Compile Include="Assets\Scripts\Entities\WolfStats.cs" />
+     <Compile Include="Assets\Scripts\Entities\DeerStats.cs" />
+     <Compile Include="Assets\Scripts\Entities\EnvironmentStats.cs" />
+     <Compile Include="Assets\Scripts\Tests\PathFinder.cs" />
+     <Compile Include="Assets\Scripts\Tests\DebugingTool.cs" />
+     <Compile Include="Assets\Scripts\Entities\PathFinder.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

@@ -11,6 +11,7 @@ namespace Entities{
         public static Vector3[, ] tileCenters;
         public static Vector3[] waterTiles;
         public static Dictionary<Vector3, bool> WalkableMap = new Dictionary<Vector3, bool>();
+        public static Dictionary<Vector3, int[]> Coord = new Dictionary<Vector3, int[]>();
         public static bool[, ] treeMap;
         public static bool[, ] plantMap;
         public static List<GameObject> plants = new List<GameObject>();
@@ -46,6 +47,15 @@ namespace Entities{
             WalkableMap.Add(new Vector3(tileCenters[mapSize-1, mapSize-1].x + 1, 0, tileCenters[mapSize-1, mapSize-1].z + 1), false);
         }
 
+        public static void CreateCoord(){
+            for(int y=0; y<mapSize; y++){
+                for(int x=0; x<mapSize; x++){
+                    int[] arg = {x, y};
+                    Coord.Add(tileCenters[x, y], arg);
+                }
+            }
+        }
+
         public static void GetInfo(){
             GameObject generateMap = GameObject.Find("Generate Map");
             Terrain.MapGenerator mapGenerator = generateMap.GetComponent<Terrain.MapGenerator>();
@@ -57,6 +67,7 @@ namespace Entities{
             wolfs.Clear();
             deer.Clear();
             WalkableMap.Clear();
+            Coord.Clear();
 
             treeMap = new bool[mapSize, mapSize];
             plantMap = new bool[mapSize, mapSize];

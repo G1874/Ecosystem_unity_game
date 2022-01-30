@@ -47,15 +47,15 @@ namespace Entities{
         void Awake()
         {
             if(!changeStatsInEditor){
-                visibleDistance = Stats.Deer.visibleDistance;
-                casualMovementSpeed = Stats.Deer.casualMovementSpeed;
-                fastMovementSpeed = Stats.Deer.fastMovementSpeed;
-                valueChangeRate = Stats.Deer.valueChangeRate;
-                hunger = Stats.Deer.hunger;
-                thirst = Stats.Deer.thirst;
-                urgeToReproduce = Stats.Deer.urgeToReproduce;
-                vitality = Stats.Deer.vitality;
-                stamina = Stats.Deer.stamina;
+                visibleDistance = DeerStats.visibleDistance;
+                casualMovementSpeed = DeerStats.casualMovementSpeed;
+                fastMovementSpeed = DeerStats.fastMovementSpeed;
+                valueChangeRate = DeerStats.valueChangeRate;
+                hunger = DeerStats.hunger;
+                thirst = DeerStats.thirst;
+                urgeToReproduce = DeerStats.urgeToReproduce;
+                vitality = DeerStats.vitality;
+                stamina = DeerStats.stamina;
             }
         }
 

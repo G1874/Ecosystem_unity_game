@@ -10,15 +10,15 @@ namespace Entities{
         {
             if(!changeStatsInEditor)
             {
-                visibleDistance = Stats.Wolf.visibleDistance;
-                casualMovementSpeed = Stats.Wolf.casualMovementSpeed;
-                fastMovementSpeed = Stats.Wolf.fastMovementSpeed;
-                valueChangeRate = Stats.Wolf.valueChangeRate;
-                hunger = Stats.Wolf.hunger;
-                thirst = Stats.Wolf.thirst;
-                urgeToReproduce = Stats.Wolf.urgeToReproduce;
-                vitality = Stats.Wolf.vitality;
-                stamina = Stats.Wolf.stamina;
+                visibleDistance = WolfStats.visibleDistance;
+                casualMovementSpeed = WolfStats.casualMovementSpeed;
+                fastMovementSpeed = WolfStats.fastMovementSpeed;
+                valueChangeRate = WolfStats.valueChangeRate;
+                hunger = WolfStats.hunger;
+                thirst = WolfStats.thirst;
+                urgeToReproduce = WolfStats.urgeToReproduce;
+                vitality = WolfStats.vitality;
+                stamina = WolfStats.stamina;
             }
         }
 

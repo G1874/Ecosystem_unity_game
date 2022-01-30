@@ -30,13 +30,13 @@ namespace Entities{
         
         void Start(){
             if(!changeStatsInEditor){
-                decorativesPopulation = Stats.Environment.decorativesPopulation;
-                initialDeerPopulation = Stats.Deer.initialDeerPopulation;
-                initialWolfPopulation = Stats.Wolf.initialWolfPopulation;
-                initialEdiblePlantPopulation = Stats.Environment.initialEdiblePlantPopulation;
-                plantGrowTime = Stats.Environment.plantGrowTime;
-                plantGrowRate = Stats.Environment.plantGrowRate;
-                maxPlantPopulation = Stats.Environment.maxPlantPopulation;
+                decorativesPopulation = EnvironmentStats.decorativesPopulation;
+                initialDeerPopulation = DeerStats.initialDeerPopulation;
+                initialWolfPopulation = WolfStats.initialWolfPopulation;
+                initialEdiblePlantPopulation = EnvironmentStats.initialEdiblePlantPopulation;
+                plantGrowTime = EnvironmentStats.plantGrowTime;
+                plantGrowRate = EnvironmentStats.plantGrowRate;
+                maxPlantPopulation = EnvironmentStats.maxPlantPopulation;
             }
 
             EntityMap.GetInfo();

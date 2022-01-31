@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Entities{
     public static class WolfStats{
-        public static int initialWolfPopulation = 10;
+        public static int initialWolfPopulation = 0;
         public static float visibleDistance = 10f;
         public static float casualMovementSpeed = 5f;
         public static float fastMovementSpeed = 10f;

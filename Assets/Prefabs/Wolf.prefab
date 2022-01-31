@@ -1261,7 +1261,7 @@ MonoBehaviour:
   urgeToReproduce: 35
   vitality: 100
   stamina: 100
-  changeStatsInEditor: 1
+  changeStatsInEditor: 0
 --- !u!1 &4255749470788490586
 GameObject:
   m_ObjectHideFlags: 0

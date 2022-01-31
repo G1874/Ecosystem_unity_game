@@ -139,8 +139,8 @@ namespace Entities{
         {   
             if(!coroutine2IsRunnig)
                 StartCoroutine(changeSurvivalParameters());
-            //if(hunger <= 0 || thirst <= 0)
-            //    Death();
+            if(hunger <= 0 || thirst <= 0)
+                Death();
             if(!coroutineIsRunnig1)
                 StartCoroutine(scanSurroundings());
             DecideOnAction();

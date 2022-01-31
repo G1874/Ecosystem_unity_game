@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Entities{
-    public class PathFinder : MonoBehaviour
+    public static class PathFinder
     {
         public static Vector3[] GetPath (int x, int y, int x2, int y2) {
             // bresenham line algorithm

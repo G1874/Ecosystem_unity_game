@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class DeerNumber : MonoBehaviour
-{
-    TextMeshProUGUI MyText;
-    void Start()
-    {
-        MyText = GetComponent<TextMeshProUGUI>();
-    }
 
-    void Update()
+namespace UI{
+    public class DeerNumber : MonoBehaviour
     {
-        MyText.text = "Number of living deer: " + Entities.EntityMap.deer.Count;
+        TextMeshProUGUI MyText;
+        void Start()
+        {
+            MyText = GetComponent<TextMeshProUGUI>();
+        }
+
+        void Update()
+        {
+            MyText.text = "Number of living deer: " + Entities.EntityMap.deer.Count;
+        }
     }
 }

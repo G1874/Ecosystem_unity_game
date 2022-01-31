@@ -1673,8 +1673,8 @@ MonoBehaviour:
   casualMovementSpeed: 5
   fastMovementSpeed: 10
   valueChangeRate: 5
-  hunger: 25
-  thirst: 25
+  hunger: 15
+  thirst: 15
   urgeToReproduce: 35
   vitality: 100
   stamina: 100

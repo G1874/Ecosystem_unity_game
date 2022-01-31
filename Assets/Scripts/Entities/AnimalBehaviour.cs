@@ -6,10 +6,15 @@ namespace Entities{
     public class AnimalBehaviour : MonoBehaviour
     {
         protected bool needsUpdate = true;
-        protected bool objectRotated = false;
+        protected bool objectRotated1 = false;
+        protected bool objectRotated2 = false;
         protected Vector3 newDirection;
         protected Vector3[] Directions = new Vector3[]{new Vector3(1f, 0, 0),new  Vector3(-1f, 0, 0),new  Vector3(0, 0, 1f),new  Vector3(0, 0, -1f),new  Vector3(1f, 0, 1f),new  Vector3(1f, 0, -1f),new  Vector3(-1f, 0, 1f),new  Vector3(1f, 0, -1f)};
+        Vector3 newRotation;
+        protected Vector3 nearestWaterTile;
+        protected GameObject nearestEdible;
         protected Vector3 Target;
+        protected Vector3[] Path;
         public int[] stopInterval = {1, 3};
         protected bool Stop = false;
         protected bool onTheMove = false;
@@ -47,7 +52,7 @@ namespace Entities{
                         key = new Vector3((Mathf.Floor(newTranslation.x) + 0.5f), 0, (Mathf.Floor(newTranslation.z) + 0.5f));
                 }
                 needsUpdate = false;
-                objectRotated = false;
+                objectRotated1 = false;
             }
             else{
                 Vector3 newTranslation = transform.position + transform.forward;
@@ -67,44 +72,17 @@ namespace Entities{
             coroutine2IsRunnig = false;
         }
 
-        // public void RotateObject(){
-        //     if(newDirection != Vector3.Zero)
-        //         var targetRotation = Quaternion.LookRotation(newDirection);
-        //     Quaternion
-        // }
-
-        // IEnumerator RotateObject(float inTime){
-        //     if(newDirection != Vector3.zero){
-        //         var targetRotation = Quaternion.LookRotation(newDirection);
-        //         for(float t = 0f; t < 1; t += Time.deltaTime/inTime){
-        //             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, t);
-        //             yield return null;
-        //         }
-        //     }
-        //     objectRotated = true;
-        // }
-
-
-        // public bool CanMove(Dictionary<Vector3, bool> WalkableMap){
-        //     Vector3 newTranslation = transform.position + transform.forward;
-        //     Vector3 key = new Vector3((Mathf.Floor(newTranslation.x) + 0.5f), 0, (Mathf.Floor(newTranslation.z) + 0.5f));
-        //     if(WalkableMap[key])
-        //         return true;
-        //     else
-        //         return false;
-        // }
-
         protected void casualMovement(){
             if(!coroutine1IsRunnig)
                 StartCoroutine(StopRandomly());
             if(!onTheMove && !Stop){
                 getNewDirection(EntityMap.WalkableMap);
-                if(!objectRotated && !needsUpdate){
-                    transform.rotation = Quaternion.LookRotation(newDirection);
-                    objectRotated = true;
+                if(!objectRotated1 && !needsUpdate){
+                    Rotate(newDirection);
+                    objectRotated1 = true;
                 }
-                else if(objectRotated && !needsUpdate){
-                    Target = transform.position + newDirection;    
+                else if(objectRotated1 && !needsUpdate){
+                    Target = transform.position + newDirection;
                     onTheMove = true;
                 }
             }
@@ -118,6 +96,7 @@ namespace Entities{
             needsUpdate = true;
             coroutine1IsRunnig = false;
         }
+
         
         protected void Move(float speed){
             if(onTheMove){
@@ -125,6 +104,10 @@ namespace Entities{
                 if(transform.position == Target)
                     onTheMove = false;
             }
+        }
+
+        protected void Rotate(Vector3 direction){
+            transform.rotation = Quaternion.LookRotation(direction);
         }
 
         protected void Death(){
@@ -165,15 +148,88 @@ namespace Entities{
                 return new Vector3(0, 100f, 0);
         }
 
-        
+        Vector3[] GetPath (int x, int y, int x2, int y2) {
+            // bresenham line algorithm
+            int w = x2 - x;
+            int h = y2 - y;
+            int absW = System.Math.Abs (w);
+            int absH = System.Math.Abs (h);
 
-        // protected Vector3 GetPath (Vector3 currentPosition, Vector3 targetPosition) {
-        //     if(currentPosition==targetPosition)
-        //         return new Vector3(0, 100f, 0);
-        //     Vector3 tileInLine = Quaternion.LookRotation(targetPosition) * new Vector3(1f, 0, 0);
-        //     Vector3 path = transform.position + tileInLine;
-        //     path = new Vector3(Mathf.Floor(path.x) + 0.5f, path.y, Mathf.Floor(path.z) + 0.5f);
-        //     return path;
-        // }
+            // Is neighbouring tile
+            if (absW <= 1 && absH <= 1) {
+                return null;
+            }
+
+            int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
+            if (w < 0) {
+                dx1 = -1;
+                dx2 = -1;
+            } else if (w > 0) {
+                dx1 = 1;
+                dx2 = 1;
+            }
+            if (h < 0) {
+                dy1 = -1;
+            } else if (h > 0) {
+                dy1 = 1;
+            }
+
+            int longest = absW;
+            int shortest = absH;
+            if (longest <= shortest) {
+                longest = absH;
+                shortest = absW;
+                if (h < 0) {
+                    dy2 = -1;
+                } else if (h > 0) {
+                    dy2 = 1;
+                }
+                dx2 = 0;
+            }
+
+            int numerator = longest >> 1;
+            Vector3[] path = new Vector3[longest];
+            for (int i = 1; i <= longest; i++) {
+                numerator += shortest;
+                if (numerator >= longest) {
+                    numerator -= longest;
+                    x += dx1;
+                    y += dy1;
+                } else {
+                    x += dx2;
+                    y += dy2;
+                }
+
+                // If not walkable, path is invalid so return null
+                // (unless is target tile, which may be unwalkable e.g water)
+                if (i != longest && !Entities.EntityMap.walkable[x, y]) {
+                    return null;
+                }
+                path[i - 1] = Entities.EntityMap.tileCenters[x, y];
+            }
+            return path;
+        }
+
+        protected void getNewRotation(Vector3 direction){
+            
+        }
+
+        protected Vector3[] findWater(Vector3 currentPosition, Vector3 targetPosition){
+            if(targetPosition.y == 100f)
+                return null;
+            int[] arg1 = EntityMap.Coord[new Vector3(currentPosition.x, 0, currentPosition.z)];
+            int[] arg2 = EntityMap.Coord[new Vector3(targetPosition.x, 0, targetPosition.z)];
+            Vector3[] Path = GetPath(arg1[0], arg1[1], arg2[0], arg2[1]);
+            return Path;
+        }
+
+        protected Vector3[] findFood(Vector3 currentPosition, GameObject targetObject){
+            if(targetObject == null)
+                return null;
+            int[] arg1 = EntityMap.Coord[new Vector3(currentPosition.x, 0, currentPosition.z)];
+            int[] arg2 = EntityMap.Coord[new Vector3(targetObject.transform.position.x, 0, targetObject.transform.position.z)];
+            Vector3[] Path = GetPath(arg1[0], arg1[1], arg2[0], arg2[1]);
+            return Path;
+        }
     }
 }

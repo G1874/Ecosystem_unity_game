@@ -51,7 +51,7 @@ namespace Entities{
             for(int y=0; y<mapSize; y++){
                 for(int x=0; x<mapSize; x++){
                     int[] arg = {x, y};
-                    Coord.Add(tileCenters[x, y], arg);
+                    Coord.Add(new Vector3(tileCenters[x, y].x, 0, tileCenters[x, y].z), arg);
                 }
             }
         }

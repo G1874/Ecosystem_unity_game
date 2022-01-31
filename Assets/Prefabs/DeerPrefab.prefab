@@ -1672,7 +1672,7 @@ MonoBehaviour:
   visibleDistance: 10
   casualMovementSpeed: 5
   fastMovementSpeed: 10
-  valueChangeRate: 5
+  valueChangeRate: 1
   hunger: 15
   thirst: 15
   urgeToReproduce: 35

@@ -38,7 +38,7 @@ namespace Entities{
 
         IEnumerator Drink(){
             coroutineIsRunnig3 = true;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             thirst = thirst + 10;
             InAction = false;
             coroutineIsRunnig3 = false;

@@ -111,6 +111,7 @@ namespace Entities{
         }
 
         protected void Death(){
+            EntityMap.deer.Remove(gameObject);
             Destroy(gameObject);
         }
 

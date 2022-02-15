@@ -19,21 +19,6 @@ namespace Terrain{
 
         void Awake(){
             GenerateMap();
-            //debug
-            
-            // for(int y=0; y<mapSize; y++){
-            //     for(int x=0; x<mapSize; x++){
-            //         for(int j=y+1; j<mapSize; j++){
-            //             for(int i=x+1; i<mapSize; i++){
-            //                 if(meshData.tileCenters[x, y] == meshData.tileCenters[i, j]){
-            //                     Debug.Log("meshData.tileCenters[x, y]" + "  x = " + x + "   y = " + y);
-            //                     break;
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-            // Debug.Log("no repeat");
         }
 
         //metoda generująca mapę, korzysta z klas MapDisplay, TextureGenerator, MeshGenerator i NoiseGenerator        

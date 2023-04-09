@@ -1,7 +1,7 @@
 # Ecosystem game
 
 ### Description:
-The game is a simulation of simple ecosystem on a randomly generated world.
+The game is a simulation of a simple ecosystem on a small randomly generated world.
 
 ### Status:
 Unfinished and abandoned
